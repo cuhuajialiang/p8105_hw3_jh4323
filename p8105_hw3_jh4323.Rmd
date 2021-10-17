@@ -48,6 +48,15 @@ aisle_df %>%
 
 ```{r}
 instacart %>% 
+  filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
+  group_by(aisle) %>% 
+  count(product_name) %>% 
+  mutate(
+    rank = rank(desc(n))
+  ) %>% 
+  filter(rank < 4) %>% 
+  arrange(aisle, rank) %>% 
+  knitr::kable() #print the table
 ```
 
 
