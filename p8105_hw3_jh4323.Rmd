@@ -2,6 +2,24 @@
 title: "Homework3"
 author: "Jialiang Hua"
 date: "10/17/2021"
-output: html_document
+output: github_document
 ---
+
+```{r}
+library(tidyverse)
+```
+
+
+## Problem 1
+
+Let's load and describe the data!
+
+```{r}
+library(p8105.datasets)
+data("instacart")
+```
+
+The "instacart" dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns.
+Observations are items in orders by user. The dataset includes `r names(instacart)` variables.
+
 
