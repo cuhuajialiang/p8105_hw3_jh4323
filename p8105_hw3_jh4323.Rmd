@@ -74,6 +74,12 @@ instacart %>%
 
 ## Problem 2
 
+Lets load the data!
+
+```{r}
+library(p8105.datasets)
+data("brfss_smart2010")
+```
 
 
 
