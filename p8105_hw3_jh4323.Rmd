@@ -117,6 +117,40 @@ states_observed_2010
 
 According to the result, **3** states **(MA NJ PA)** were observed at 7 or more locations in 2002, while **11** states **(CA FL MA MD NC NE NJ NY OH TX WA)** were observed at 7 or more locations in 2010.
 
+*2.2 Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).
 
+```{r excell}
+excell_df =
+  brfss_clean %>% 
+  filter(response == "Excellent") %>% 
+  select(year, locationabbr, data_value) %>% 
+  group_by(year, locationabbr) %>% 
+  summarize(mean_data = mean(data_value))
+  
+excell_df %>% 
+  group_by(locationabbr) %>% 
+  ggplot(aes(x = year, y = mean_data, color = locationabbr)) +
+  geom_line(alpha = 0.5) +
+  labs(
+    title = "The mean data value of state vs year",
+    y = "Mean data value", 
+    x = "Year",
+    ) +
+  scale_colour_hue("State abb") +
+  theme(legend.key.size = unit(0.02,'cm')) +
+  theme(legend.key.width = unit(0.05,'cm'))
+```
+
+2.3 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
+```{r}
+brfss_clean %>%
+  filter(locationabbr == "NY", year %in% c(2006, 2010)) %>%
+  ggplot(aes(x = data_value, color = as.character(year))) +
+  geom_density() +
+  facet_grid(. ~ year) + 
+  labs(title = "Distribution of data value of responses for 2006 and 2010 in NY State",
+       x = "Data value of responses",
+       y = "Density of data value")
+```
 
 
