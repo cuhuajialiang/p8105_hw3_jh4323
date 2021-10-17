@@ -83,7 +83,7 @@ data("brfss_smart2010")
 
 Let's do some data cleaning!
 ```{r}
-brfss_smart2010 %>%
+brfss_clean <- brfss_smart2010 %>%
   janitor::clean_names() %>% 
   filter(
     topic == "Overall Health", 
@@ -95,8 +95,27 @@ brfss_smart2010 %>%
   )
 ```
 
-*2.1 
+*2.1 In 2002, which states were observed at 7 or more locations? What about in 2010?
+```{r}
+states_observed_2002 = brfss_clean %>% 
+  filter(year == 2002) %>%
+  select(c(1, 2,, 3)) %>% 
+  distinct() %>% 
+  count(locationabbr) %>% 
+  filter(n > 7)
 
+states_observed_2010 = brfss_clean %>% 
+  filter(year == 2010) %>%
+  select(c(1, 2,, 3)) %>% 
+  distinct() %>% 
+  count(locationabbr) %>% 
+  filter(n > 7)
+
+states_observed_2002
+states_observed_2010
+```
+
+According to the result, **3** states **(MA NJ PA)** were observed at 7 or more locations in 2002, while **11** states **(CA FL MA MD NC NE NJ NY OH TX WA)** were observed at 7 or more locations in 2010.
 
 
 
