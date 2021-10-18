@@ -178,6 +178,8 @@ acc_clean =
     ) %>% 
   mutate(
     day = as.factor(day),
+    day = fct_relevel(day, 
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" , "Saturday", "Sunday"),
     weekday = as.factor(weekday),
     minute = as.numeric(minute)
     )
@@ -185,9 +187,24 @@ acc_clean =
 
 This dataset is has `r nrow(acc_clean)` observations,  `r ncol(acc_clean)` columns. It contains `r names(acc_clean)` variables.
 
+*3.2 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate across minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?
+```{r}
+acc_clean %>% 
+  group_by(week, day) %>%
+  summarize(total_activity = sum(activity_counts)) %>% 
+  pivot_wider(
+    names_from = day,
+    values_from = total_activity
+  ) %>% 
+  knitr::kable()
+```
+
+I find from the table that the total activity on weekend in lower than the weekday.
+
+*3.3 
 
 
-
-
+     
+    
 
 
