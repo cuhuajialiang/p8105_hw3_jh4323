@@ -154,3 +154,40 @@ brfss_clean %>%
 ```
 
 
+## Problem 3
+
+Let's load the data for problem 3!
+```{r}
+acc_df = read_csv("./data/accel_data.csv")
+```
+
+*3.1 Load, tidy, and otherwise wrangle the data. Your final dataset should include all originally observed variables and values; have useful variable names; include a weekday vs weekend variable; and encode data with reasonable variable classes. Describe the resulting dataset (e.g. what variables exist, how many observations, etc).
+```{r}
+acc_clean = 
+  acc_df %>% 
+  pivot_longer(
+    activity.1 : activity.1440,
+    names_to = "minute",
+    names_prefix = "activity.",
+    values_to = "activity_counts"
+    ) %>% 
+  mutate(
+      weekday = case_when(
+      day %in% c("Monday","Tuesday","Wednesday","Thursday","Friday") ~ "weekday",
+      day %in% c("Saturday","Sunday") ~ "weekend")
+    ) %>% 
+  mutate(
+    day = as.factor(day),
+    weekday = as.factor(weekday),
+    minute = as.numeric(minute)
+    )
+```
+
+This dataset is has `r nrow(acc_clean)` observations,  `r ncol(acc_clean)` columns. It contains `r names(acc_clean)` variables.
+
+
+
+
+
+
+
