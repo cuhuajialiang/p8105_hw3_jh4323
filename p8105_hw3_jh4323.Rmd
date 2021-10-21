@@ -1,5 +1,5 @@
 ---
-title: "Homework3"
+title: "P8105_Homework3"
 author: "Jialiang Hua"
 date: "10/17/2021"
 output: github_document
@@ -28,17 +28,16 @@ scale_fill_discrete = scale_fill_viridis_d
 
 ## Problem 1
 
-Let's load and describe the data!
+**Let's load and describe the data!**
 
 ```{r}
 library(p8105.datasets)
 data("instacart")
 ```
 
-The "instacart" dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns.
-Observations are items in orders by user. The dataset includes `r names(instacart)` variables.
+The "instacart" dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns. The dataset includes `r names(instacart)` variables. Observations are items in orders by user. Every user has an unique user id, and each order has an unique order id. Every product was assigned a product id, the aisle together with aisle id showed the category of product. Product belonging to different department could be distinguished by department id. Reorder indicated whether the product has been ordered before. Order dow and order hour of day means at which hour in the weekday the product was ordered.
 
-* 1.1 How many aisles are there, and which aisles are the most items ordered from?
+**1.1 How many aisles are there, and which aisles are the most items ordered from?**
 ```{r}
 aisle_df <- instacart %>% 
   count(aisle) %>% 
@@ -47,7 +46,7 @@ aisle_df <- instacart %>%
 
 There are `r nrow(aisle_df)` aisles and the most items ordered aisle is fresh vegetables.
 
-* 1.2 Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.
+**1.2 Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.**
 ```{r}
 aisle_df %>% 
   filter(n > 10000) %>%
@@ -60,7 +59,9 @@ aisle_df %>%
   geom_point()
 ```
 
-* 1.3 Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
+There are 39 aisles having more than 1000 items sold. The plot is shown.
+
+**1.3 Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.**
 ```{r}
 instacart %>% 
   filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>%   group_by(aisle) %>% 
@@ -73,7 +74,9 @@ instacart %>%
   knitr::kable() #print the table
 ```
 
-* 1.4 Make a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week; format this table for human readers (i.e. produce a 2 x 7 table).
+The top 3 popular items in baking ingredients are Light Brown Sugar, Pure Baking Soda, Cane Sugar. The top 3 popular items in dog food care are Snake Sticks Chicken & Rice Recipe Dog treats, Organix Chicken & Brown Rice, Small Dog Biscuits. The top 3 popular items in packaged vegetables fruits are Organic Baby Spinach, Organic Raspberries and Organic Blueberries. According to table, we could found that the number of the items are greatly different between aisles.
+
+**1.4 Make a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week; format this table for human readers (i.e. produce a 2 x 7 table).**
 ```{r}
 instacart %>% 
   filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) %>%
@@ -86,17 +89,18 @@ instacart %>%
   knitr::kable() 
 ```
 
+The Table shows mean hour of the day at which Coffee Ice Cream and Pink Lady Apples are ordered. I found that the time that Pink Lady Apples are ordered fluctuate a little during the week while the Coffee Ice Cream has a higher mean during the weekdays.
 
 ## Problem 2
 
-Lets load the data!
+**Lets load the data!**
 
 ```{r}
 library(p8105.datasets)
 data("brfss_smart2010")
 ```
 
-Let's do some data cleaning!
+**Let's do some data cleaning!**
 ```{r}
 brfss_clean <- brfss_smart2010 %>%
   janitor::clean_names() %>% 
@@ -110,7 +114,7 @@ brfss_clean <- brfss_smart2010 %>%
   )
 ```
 
-* 2.1 In 2002, which states were observed at 7 or more locations? What about in 2010?
+**2.1 In 2002, which states were observed at 7 or more locations? What about in 2010?**
 ```{r}
 states_observed_2002 = brfss_clean %>% 
   filter(year == 2002) %>%
@@ -132,7 +136,7 @@ states_observed_2010
 
 According to the result, **6** states **(CT FL MA NC NJ PA)** were observed at 7 or more locations in 2002, while **14** states **(CA CO FL MA MD NC NE NJ NY OH PA SC TX WA)** were observed at 7 or more locations in 2010.
 
-* 2.2 Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).
+**2.2 Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).**
 
 ```{r excell}
 excell_df =
@@ -156,7 +160,9 @@ excell_df %>%
   theme(legend.key.width = unit(0.05,'cm'))
 ```
 
-* 2.3 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
+The spaghetti plot shows the fluctuate of data_value together with year. From the plot, it could find that, in 2005, there was a decrease trend in data value, while it increased soon in the 2006. Most of the value are between 20 and 25.
+
+**2.3 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.**
 ```{r}
 brfss_clean %>%
   filter(locationabbr == "NY", year %in% c(2006, 2010)) %>%
@@ -168,15 +174,16 @@ brfss_clean %>%
        y = "Density of data value")
 ```
 
+The density plot shows the distribution of data value.
 
 ## Problem 3
 
-Let's load the data for problem 3!
+**Let's load the data for problem 3!**
 ```{r}
 acc_df = read_csv("./data/accel_data.csv")
 ```
 
-* 3.1 Load, tidy, and otherwise wrangle the data. Your final dataset should include all originally observed variables and values; have useful variable names; include a weekday vs weekend variable; and encode data with reasonable variable classes. Describe the resulting dataset (e.g. what variables exist, how many observations, etc).
+**3.1 Load, tidy, and otherwise wrangle the data. Your final dataset should include all originally observed variables and values; have useful variable names; include a weekday vs weekend variable; and encode data with reasonable variable classes. Describe the resulting dataset (e.g. what variables exist, how many observations, etc).**
 ```{r}
 acc_clean = 
   acc_df %>% 
@@ -202,7 +209,7 @@ acc_clean =
 
 This dataset is has `r nrow(acc_clean)` observations,  `r ncol(acc_clean)` columns. It contains `r names(acc_clean)` variables.
 
-* 3.2 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate across minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?
+**3.2 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate across minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?**
 ```{r}
 acc_clean %>% 
   group_by(week, day) %>%
@@ -216,7 +223,7 @@ acc_clean %>%
 
 I find from the table that the total activity on weekend in lower than the weekday.
 
-* 3.3 Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.
+**3.3 Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.**
 ```{r}
 acc_clean %>% 
   ggplot(aes(x = minute, y = activity_counts, color = day, group = day_id)) +
